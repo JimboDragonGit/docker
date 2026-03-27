@@ -68,6 +68,11 @@ def bookworm?
   false
 end
 
+def trixie?
+  return true if platform?('debian') && node['platform_version'].to_i == 13
+  false
+end
+
 def bionic?
   return true if platform?('ubuntu') && node['platform_version'] == '18.04'
   false
@@ -104,6 +109,8 @@ def version_string(v)
                'bullseye'
              elsif bookworm? # deb 12
                'bookworm'
+             elsif trixie? # deb 13
+               'trixie'
              elsif bionic? # ubuntu 18.04
                'bionic'
              elsif focal? # ubuntu 20.04
@@ -192,6 +199,8 @@ action :create do
         if (debian? && node['platform_version'].to_i < 13) || (ubuntu? && node['platform_version'].to_f <= 24.04)
           signed_by false
         end if Chef::VERSION >= Gem::Version.new('18.7.10')
+        distribution 'trixie' if trixie?
+        trusted true if trixie?
         action :add
       end
 

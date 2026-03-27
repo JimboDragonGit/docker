@@ -84,6 +84,22 @@ alias_method :run_group, :group
 alias_method :graph, :data_root
 
 action_class do
+  # def name
+  #   new_resource.instance
+  # end
+
+  # def pidfile
+  #   new_resource.pidfile
+  # end
+
+  # def logfile
+  #   new_resource.logfile
+  # end
+
+  # def http_proxy
+  #   new_resource.http_proxy
+  # end
+
   def libexec_dir
     return '/usr/libexec/docker' if platform_family?('rhel')
     '/usr/lib/docker'
